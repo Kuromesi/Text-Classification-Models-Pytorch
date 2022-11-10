@@ -1,7 +1,6 @@
 # train.py
 
 from utils import *
-from myUtils import *
 from model import *
 from config import Config
 import sys
@@ -18,7 +17,7 @@ if __name__=='__main__':
     if len(sys.argv) > 3:
         test_file = sys.argv[2]
     
-    dataset = DataSet_(config)
+    dataset = Dataset(config)
     dataset.load_data(train_file, test_file)
     
     # Create Model with specified optimizer and loss function

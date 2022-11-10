@@ -1,165 +1,140 @@
 # utils.py
 
-import random
-import torch
-# from torchtext.legacy import data
-import spacy
-import pandas as pd
-import numpy as np
+from torchtext.vocab import build_vocab_from_iterator
+from torchtext.data.functional import to_map_style_dataset
+from torchtext.data.utils import get_tokenizer
+from torchtext.functional import to_tensor
+from torch.utils.data import DataLoader, Dataset
+from torch.utils.data.dataset import random_split
+from torch.utils.data.dataloader import _SingleProcessDataLoaderIter, _MultiProcessingDataLoaderIter
+from itertools import chain
 from sklearn.metrics import accuracy_score
+import random
+import spacy
+import torch
+import numpy as np
 import pickle
 
+class BlockShuffleDataLoader(DataLoader):
+    def __init__(self, dataset: Dataset, sort_key, sort_bs_num=None, is_shuffle=True, **kwargs):
+        """
+        初始化函数，继承DataLoader类
+        Args:
+            dataset: Dataset类的实例，其中中必须包含dataset变量，并且该变量为一个list
+            sort_key: 排序函数，即使用dataset元素中哪一个变量的长度进行排序
+            sort_bs_num: 排序范围，即在多少个batch_size大小内进行排序，默认为None，表示对整个序列排序
+            is_shuffle: 是否对分块后的内容，进行随机打乱，默认为True
+            **kwargs:
+        """
+        super().__init__(dataset, **kwargs)
+        self.sort_bs_num = sort_bs_num
+        self.sort_key = sort_key
+        self.is_shuffle = is_shuffle
 
+    def __iter__(self):
+        self.dataset._data = self.block_shuffle(self.dataset._data, self.batch_size, self.sort_bs_num,
+                                                        self.sort_key, self.is_shuffle)
+        if self.num_workers == 0:
+            return _SingleProcessDataLoaderIter(self)
+        else:
+            return _MultiProcessingDataLoaderIter(self)
 
-# class Dataset(object):
-#     def __init__(self, config):
-#         self.config = config
-#         self.train_iterator = None
-#         self.test_iterator = None
-#         self.val_iterator = None
-#         self.vocab = []
-#         self.word_embeddings = {}
-    
-#     def parse_label(self, label):
-#         '''
-#         Get the actual labels from label string
-#         Input:
-#             label (string) : labels of the form '__label__2'
-#         Returns:
-#             label (int) : integer value corresponding to label string
-#         '''
-#         return int(label.strip()[-1])
+    @staticmethod
+    def block_shuffle(data, batch_size, sort_bs_num, sort_key, is_shuffle):
+        random.shuffle(data)
+        # 将数据按照batch_size大小进行切分
+        tail_data = [] if len(data) % batch_size == 0 else data[-(len(data) % batch_size):]
+        data = data[:len(data) - len(tail_data)]
+        assert len(data) % batch_size == 0
+        # 获取真实排序范围
+        sort_bs_num = len(data) // batch_size if sort_bs_num is None else sort_bs_num
+        # 按照排序范围进行数据划分
+        data = [data[i:i + sort_bs_num * batch_size] for i in range(0, len(data), sort_bs_num * batch_size)]
+        # 在排序范围，根据排序函数进行降序排列
+        data = [sorted(i, key=sort_key, reverse=True) for i in data]
+        # 将数据根据batch_size获取batch_data
+        data = list(chain(*data))
+        data = [data[i:i + batch_size] for i in range(0, len(data), batch_size)]
+        # 判断是否需要对batch_data序列进行打乱
+        if is_shuffle:
+            random.shuffle(data)
+        # 将tail_data填补回去
+        data = list(chain(*data)) + tail_data
+        return data
 
-#     def get_pandas_df(self, filename):
-#         '''
-#         Load the data into Pandas.DataFrame object
-#         This will be used to convert data to torchtext object
-#         '''
-#         with open(filename, 'r') as datafile:     
-#             data = [line.strip().split(',', maxsplit=1) for line in datafile]
-#             data_text = list(map(lambda x: x[1], data))
-#             data_label = list(map(lambda x: self.parse_label(x[0]), data))
+class Dataset():
+    def __init__(self, config):
+        self.config = config
+        self.train_iterator = None
+        self.test_iterator = None
+        self.val_iterator = None
+        self.vocab = []
+        self.word_embeddings = {}
 
-#         full_df = pd.DataFrame({"text":data_text, "label":data_label})
-#         return full_df
-    
+    def parse_label(self, label):
+        '''
+        Get the actual labels from label string
+        Input:
+            label (string) : labels of the form '__label__2'
+        Returns:
+            label (int) : integer value corresponding to label string
+        '''
+        return int(label.strip()[-1])
 
-#     # !!!GARBAGE!!!
-#     # def _load_data(self, train_file, test_file=None):
-#     #     NLP = spacy.load('en_core_web_trf')
-#     #     RATIO = 0.8
-#     #     vocab = set()
-        
-#     #     # Load train & validate data and generate vocab
-#     #     with open(train_file, 'r') as datafile:     
-#     #         data = [line.strip().split(',', maxsplit=1) for line in datafile]
-#     #         data_text = list(map(lambda x: x[1], data))
-#     #         data_label = list(map(lambda x: self.parse_label(x[0]), data))
-        
-#     #     tokenizer = lambda sent: [x.lemma_.lower() for x in NLP(sent) if x.lemma_.lower() != " "]
-#     #     data = []
-#     #     for text in data_text:
-#     #         t = tokenizer(text)
-#     #         data.append(t)
-#     #         vocab.update(tuple(t))
-#     #     vocab = list(vocab)
-#     #     UNK = len(vocab)
-#     #     temp = list(zip(data_label, data))
-#     #     random.shuffle(temp)
-#     #     idx = int(len(temp) * RATIO)
-        
-#     #     word2id = lambda word: vocab.index(word) / UNK
-#     #     train = []
-#     #     validate = []
-#     #     for i in range(idx):
-#     #         train.append(tuple([temp[i][0], list(map(word2id, temp[i][1]))]))
-#     #     for i in range(idx, len(temp)):
-#     #         validate.append(tuple([temp[i][0], list(map(word2id, temp[i][1]))]))
-        
-#     #     # Load test data 
-#     #     with open(test_file, 'r') as datafile:     
-#     #         data = [line.strip().split(',', maxsplit=1) for line in datafile]
-#     #         data_text = list(map(lambda x: x[1], data))
-#     #         data_label = list(map(lambda x: self.parse_label(x[0]), data))
-#     #     data = []
-#     #     for text in data_text:
-#     #         t = tokenizer(text)
-#     #         data.append(t)
-#     #     temp = list(zip(data_label, data))
-#     #     test = []
-#     #     for i in range(len(temp)):
-#     #         test.append(tuple([temp[i][0], list(map(word2id, temp[i][1]))]))
-            
-#     #     print ("Loaded {} training examples".format(len(train)))
-#     #     print ("Loaded {} test examples".format(len(test)))
-#     #     print ("Loaded {} validation examples".format(len(validate)))
+    def yield_tokens(self, data_iter, tokenizer):
+        for _, text in data_iter:
+            yield tokenizer(text)
 
-        
-    
-#     def load_data(self, train_file, test_file=None, val_file=None):
-#         '''
-#         Loads the data from files
-#         Sets up iterators for training, validation and test data
-#         Also create vocabulary and word embeddings based on the data
-        
-#         Inputs:
-#             train_file (String): path to training file
-#             test_file (String): path to test file
-#             val_file (String): path to validation file
-#         '''
+    def collate_batch(self, batch):
+        label_list, text_list, offsets = [], [], [0]
+        for (_label, _text) in batch:
+            label_list.append(_label)
+            processed_text = torch.tensor(self.text_pipeline(_text), dtype=torch.int64)
+            text_list.append(processed_text.tolist())
+            offsets.append(processed_text.size(0))
+        label_list = torch.tensor(label_list, dtype=torch.int64)
+        offsets = torch.tensor(offsets[:-1]).cumsum(dim=0)
+        return label_list, to_tensor(text_list, padding_value=1).t(), offsets
 
-#         NLP = spacy.load('en_core_web_trf')
-#         vocab = NLP.vocab
-        
-#         tokenizer = lambda sent: [x.text for x in NLP.tokenizer(sent) if x.text != " "]
-        
-#         # Creating Field for data
-#         TEXT = data.Field(sequential=True, tokenize=tokenizer, lower=True, fix_length=self.config.max_sen_len)
-#         LABEL = data.Field(sequential=False, use_vocab=False)
-        
-#         datafields = [("text",TEXT),("label",LABEL)]
-        
-#         # Load data from pd.DataFrame into torchtext.data.Dataset
-#         train_df = self.get_pandas_df(train_file)
-#         train_examples = [data.Example.fromlist(i, datafields) for i in train_df.values.tolist()]
-#         train_data = data.Dataset(train_examples, datafields)
-        
-#         test_df = self.get_pandas_df(test_file)
-#         test_examples = [data.Example.fromlist(i, datafields) for i in test_df.values.tolist()]
-#         test_data = data.Dataset(test_examples, datafields)
-        
-#         # If validation file exists, load it. Otherwise get validation data from training data
-#         if val_file:
-#             val_df = self.get_pandas_df(val_file)
-#             val_examples = [data.Example.fromlist(i, datafields) for i in val_df.values.tolist()]
-#             val_data = data.Dataset(val_examples, datafields)
-#         else:
-#             train_data, val_data = train_data.split(split_ratio=0.8)
-        
-#         TEXT.build_vocab(train_data)
-#         self.vocab = TEXT.vocab
-        
-#         self.train_iterator = data.BucketIterator(
-#             (train_data),
-#             batch_size=self.config.batch_size,
-#             sort_key=lambda x: len(x.text),
-#             repeat=False,
-#             shuffle=True)
-        
-#         self.val_iterator, self.test_iterator = data.BucketIterator.splits(
-#             (val_data, test_data),
-#             batch_size=self.config.batch_size,
-#             sort_key=lambda x: len(x.text),
-#             repeat=False,
-#             shuffle=False)
-        
-#         print ("Loaded {} training examples".format(len(train_data)))
-#         print ("Loaded {} test examples".format(len(test_data)))
-#         print ("Loaded {} validation examples".format(len(val_data)))
+    def load_data(self, train_file, test_file=None, val_file=None):
+        NLP = spacy.load('en_core_web_trf')
+        # tokenizer = lambda sent: [x.lemma_.lower() for x in NLP(sent) if x.lemma_.lower() != " "]
+        tokenizer = get_tokenizer('basic_english')
+        with open(train_file, 'r') as datafile:     
+                    data = [line.strip().split(',', maxsplit=1) for line in datafile]
+                    data_text = list(map(lambda x: x[1], data))
+                    data_label = list(map(lambda x: self.parse_label(x[0]), data))
+        train = list(zip(data_label, data_text))
+        train_iter = to_map_style_dataset(iter(train))
+        self.vocab = build_vocab_from_iterator(self.yield_tokens(train_iter, tokenizer), specials=["<unk>"])
+        self.vocab.set_default_index(self.vocab["<unk>"])
+        self.text_pipeline = lambda x: self.vocab(tokenizer(x))
+        self.label_pipeline = lambda x: int(x) - 1
 
+        # Load test data
+        with open(test_file, 'r') as datafile:     
+            data = [line.strip().split(',', maxsplit=1) for line in datafile]
+            data_text = list(map(lambda x: x[1], data))
+            data_label = list(map(lambda x: self.parse_label(x[0]), data))
+        test = list(zip(data_label, data_text))
+        test_dataset = to_map_style_dataset(iter(test))
 
+        num_train = int(len(train_iter) * 0.95)
+        train_dataset, valid_dataset = random_split(train_iter, [num_train, len(train_iter) - num_train])
+        train_dataset = to_map_style_dataset(train_dataset)
+        valid_dataset = to_map_style_dataset(valid_dataset)
+        sort_key=lambda x: len(x[1])
+        self.train_iterator = BlockShuffleDataLoader(train_dataset, batch_size=self.config.batch_size,
+                                    shuffle=True, collate_fn=self.collate_batch, sort_key=sort_key)
+        self.val_iterator = BlockShuffleDataLoader(valid_dataset, batch_size=self.config.batch_size,
+                                    shuffle=True, collate_fn=self.collate_batch, sort_key=sort_key)
+        self.test_iterator = BlockShuffleDataLoader(test_dataset, batch_size=self.config.batch_size,
+                                    shuffle=True, collate_fn=self.collate_batch, sort_key=sort_key)
+
+        print ("Loaded {} training examples".format(len(train_dataset)))
+        print ("Loaded {} test examples".format(len(test_dataset)))
+        print ("Loaded {} validation examples".format(len(valid_dataset)))
         
-
 def evaluate_model(model, iterator):
     all_preds = []
     all_y = []
