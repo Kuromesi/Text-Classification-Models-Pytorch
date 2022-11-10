@@ -53,7 +53,7 @@ class Dataset(object):
             val_file (String): absolute path to validation file
         '''
 
-        NLP = spacy.load('en')
+        NLP = spacy.load('en_core_web_trf')
         tokenizer = lambda sent: [x.text for x in NLP.tokenizer(sent) if x.text != " "]
         
         # Creating Field for data

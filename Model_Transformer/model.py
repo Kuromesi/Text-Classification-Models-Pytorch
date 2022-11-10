@@ -32,7 +32,7 @@ class Transformer(nn.Module):
         )
         
         # Softmax non-linearity
-        self.softmax = nn.Softmax()
+        self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
         embedded_sents = self.src_embed(x.permute(1,0)) # shape = (batch_size, sen_len, d_model)
@@ -66,11 +66,11 @@ class Transformer(nn.Module):
         for i, batch in enumerate(train_iterator):
             self.optimizer.zero_grad()
             if torch.cuda.is_available():
-                x = batch.text.cuda()
-                y = (batch.label - 1).type(torch.cuda.LongTensor)
+                x = batch[1].cuda()
+                y = (batch[0] - 1).type(torch.cuda.LongTensor)
             else:
-                x = batch.text
-                y = (batch.label - 1).type(torch.LongTensor)
+                x = batch[1]
+                y = (batch[0] - 1).type(torch.LongTensor)
             y_pred = self.__call__(x)
             loss = self.loss_op(y_pred, y)
             loss.backward()

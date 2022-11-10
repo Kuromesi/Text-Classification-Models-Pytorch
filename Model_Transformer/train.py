@@ -1,6 +1,7 @@
 # train.py
 
 from utils import *
+from myUtils import *
 from model import *
 from config import Config
 import sys
@@ -10,14 +11,14 @@ import torch
 
 if __name__=='__main__':
     config = Config()
-    train_file = '../data/ag_news.train'
+    train_file = './data/ag_news.train'
     if len(sys.argv) > 2:
         train_file = sys.argv[1]
-    test_file = '../data/ag_news.test'
+    test_file = './data/ag_news.test'
     if len(sys.argv) > 3:
         test_file = sys.argv[2]
     
-    dataset = Dataset(config)
+    dataset = DataSet_(config)
     dataset.load_data(train_file, test_file)
     
     # Create Model with specified optimizer and loss function
@@ -44,7 +45,7 @@ if __name__=='__main__':
     train_acc = evaluate_model(model, dataset.train_iterator)
     val_acc = evaluate_model(model, dataset.val_iterator)
     test_acc = evaluate_model(model, dataset.test_iterator)
-
+    save_model(model, 'ckpts/transformer.pkl')
     print ('Final Training Accuracy: {:.4f}'.format(train_acc))
     print ('Final Validation Accuracy: {:.4f}'.format(val_acc))
     print ('Final Test Accuracy: {:.4f}'.format(test_acc))
