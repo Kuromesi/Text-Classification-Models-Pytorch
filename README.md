@@ -1,5 +1,6 @@
 # Text-Classification-Models-Pytorch
 Implementation of State-of-the-art Text Classification Models in Pytorch
+**EDITED BY KUROMESI**
 
 ## Implemented Models
 - **fastText:** fastText Model from [Bag of Tricks for Efficient Text Classification](https://arxiv.org/abs/1607.01759)

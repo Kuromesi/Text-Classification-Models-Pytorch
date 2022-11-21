@@ -31,7 +31,7 @@ class Seq2SeqAttention(nn.Module):
         )
         
         # Softmax non-linearity
-        self.softmax = nn.Softmax()
+        self.sigmoid = nn.Sigmoid()
                 
     def apply_attention(self, rnn_output, final_hidden_state):
         '''
@@ -77,7 +77,7 @@ class Seq2SeqAttention(nn.Module):
         concatenated_vector = torch.cat([final_hidden_state, attention_out], dim=1)
         final_feature_map = self.dropout(concatenated_vector) # shape=(batch_size, num_directions * hidden_size)
         final_out = self.fc(final_feature_map)
-        return self.softmax(final_out)
+        return self.sigmoid(final_out)
     
     def add_optimizer(self, optimizer):
         self.optimizer = optimizer
@@ -102,18 +102,20 @@ class Seq2SeqAttention(nn.Module):
         for i, batch in enumerate(train_iterator):
             self.optimizer.zero_grad()
             if torch.cuda.is_available():
-                x = batch.text.cuda()
-                y = (batch.label - 1).type(torch.cuda.LongTensor)
+                x = batch[1].cuda()
+                # y = (batch[0] - 1).type(torch.cuda.LongTensor)
+                y = batch[0].cuda()
             else:
-                x = batch.text
-                y = (batch.label - 1).type(torch.LongTensor)
+                x = batch[1].type(torch.LongTensor)
+                # y = (batch[0] - 1).type(torch.LongTensor)
+                y = batch[0]
             y_pred = self.__call__(x)
             loss = self.loss_op(y_pred, y)
             loss.backward()
             losses.append(loss.data.cpu().numpy())
             self.optimizer.step()
     
-            if i % 100 == 0:
+            if i % 10 == 0:
                 print("Iter: {}".format(i+1))
                 avg_train_loss = np.mean(losses)
                 train_losses.append(avg_train_loss)

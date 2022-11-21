@@ -1,0 +1,482 @@
+7|9|6|0|10 , file disclosure vulnerability information exposure
+7|9|6|0|10 , information disclosure heap base buffer
+5 , denial service memory consumption
+7|6|4|0 , read send mail change configuration
+7|9|6|0|10 , sensitive information
+7|6|0 , overwrite arbitrary file
+7|9|6|0|10 , obtain sensitive information
+7|6|0 , untrusted search path gain privilege
+7|9|6|0|10 , kernel memory access small privileged kernel datum
+7|9|6|0|10 , discover credential
+3|7|6|9|1|0 , bypass configure authentication service
+7|6|0 , tampering datum denial service
+7|9|6|0|10 , ipdr obtain potentially sensitive mac address network utilization
+7|9|6|0|10 , xml programmatic interface obtain sensitive meeting information
+7|6|9|0 , compromise oracle flexcube private banking impact additional product unauthorized update insert delete access unauthorized read access
+3|7|6|9|1|0 , manage device install application write lua programming language write application run arbitrary lua code receive lua code load lua engine run code
+7|6|0 , escape user input property code injection
+7|9|6|0|10 , kill arbitrary process pid file modification
+3|7|6|9|1|0 , invoke mbean method execute arbitrary code unspecified vector
+3|7|6|9|1|0 , authentication bypass execute certain api
+7|6|0 , local file access
+7|6|0 , dll injection execution arbitrary executable
+7|9|6|0|10 , obtain sensitive information
+7|9|6|0|10 ,
+10 , overwrite file denial service code execution
+7|9|6|0|10 , obtain sensitive information
+7|9|6|0|10 , memory corruption bounds write memory disclosure code execution
+3|7|6|4|0 , security vulnerability bypass account lockout
+7|6|9|0 , obtain sensitive information modify setting manage build agent
+3|7|6|9|1|0 , bypass user 2 factor authentication method
+7|6|10|0 , control agent process replace arbitrary file
+7|6|0 , write arbitrary file
+5 , crash reload affect device denial service dos condition watchdog timeout crash watchdog timeout crash crash reload affect device
+7|6|0 , bypass intend access restriction
+7|6|0 , denial service application crash
+7|6|0 , craft url pass external server ssrf attack
+7|6|0 , gain bash shell access string injection
+7|9|6|0|10 , secure trash trash file obtain sensitive information read storage medium
+7|6|0 , inject arbitrary command paste content
+7|9|6|0|10 , obtain potentially sensitive information
+10 , write protection lock modify subset flash memory
+7|6|0 , intercept manipulate request trick user perform arbitrary action console clickjacking
+7|9|6|0|10 , create buffer allocunsafe expose internal application memory
+7|9|6|0|10 , strip content allow invite request asterisk dialog process unvetted source
+3|7|6|9|1|0 , obtain administrator access
+7|6|0 , server template injection ssti
+7|6|9|0 , access mongod delete pulp_database
+7|6|0 , loss information
+7|9|6|0|10 , print login password
+5 , memory leak memory leak system exception
+7|6|0 , install arbitrary gem
+2 , authorization token session cookie cookie value obtain cookie value
+3|7|6|9|1|0 , bypass host base authentication execute action
+7|6|0 , arbitrary write
+7|6|0 , disclose sensitive account information
+7|9|6|0|10 , defeat cryptographic protection mechanism
+7|6|0 , rgw crash denial service
+7|9|6|0|10 , obtain sensitive information
+3|7|6|9|1|0 , authentication vulnerability
+7|6|0 , read arbitrary file
+7|6|4|0 , outbound communication external component encryption internal datum
+7|6|9|0 , affect confidentiality integrity
+3|7|6|9|1|0 ,
+3|1 , job isolation escape elevate privilege data confidentiality integrity
+7|9|6|0|10 , obtain sensitive information
+3|7|6|9|1|0 , remote code execution
+7|6|0 , determine existence arbitrary file url obtain file url content parse error xml external entity aka xxe
+7|9|6|0|10 , limited plaintext disclosure disclosure plaintext content
+7|6|4|0 ,
+5 , memory leak
+3|7|9|6|4|0 , compromise affected bluecats network implementation gain physical control ios device compromise
+7|6|0 , obtain sensitive information
+7|6|0 , remote code execution remote code execution
+7|6|0 , gain write access file
+7|6|0 , open redirect redirect user arbitrary web site phishing attack insecure redirect
+7|9|6|0|10 , disclose presence arbitrary file assess
+7|6|0 , escalation privilege local access
+7|9|6|0|10 , information leak download mcafee product package install machine policy detail
+7|6|0 , unspecified impact attack vector
+7|6|0 , bypass hostname specific url check
+3|7|6|9|1|0 , spoof arbitrary user
+2 , logging session cookie impersonation user
+7|6|0 ,
+7|6|9|0 , authenticate bypass intended access restriction
+7|6|0 , denial service invalid 0x00 write operation daemon crash
+7|9|6|0|10 , obtain sensitive information
+7|9|6|0|10 , access datum outside permission level access sensitive datum
+7|9|6|0|10 , compromise oracle hospitality suite8 impact additional product unauthorized read access
+7|6|0 , dynamic library loading arbitrary code execution
+7|6|0 , denial service routing engine reload
+7|9|6|0|10 , guess token value create backup
+3|7|9|6|4|0 , protection secret
+10 , view submission
+7|6|0 , spoof signature saml 1 response denial service memory consumption
+7|6|9|0 , affect confidentiality integrity availability
+7|6|0 , denial service dos attack affect device exhaust available cpu resource prevent email process dos condition
+7|6|0 , escalation privilege local access
+7|6|0 , dos vulnerability send craft packet affected device deny service
+7|6|9|0 , access control creation tcp udp rule gain access unauthorized resource
+7|9|6|0|10 , obtain user id meeting detail authentication token
+7|6|0 , input validation bypass unauthorized information modification
+7|6|0 , spoof url user interface
+7|6|0 , privilege escalation modify run kernel extension
+7|9|6|0|10 , contain cleartext key obtain sensitive information
+7|6|0 , dll search order control system
+7|6|0 , denial service
+7|6|0 , denial service application crash
+3|7|6|9|1|0 , reboot execute certain instruction unexpected behavior
+7|6|0 , denial service general protection fault system crash
+3|7|6|9|1|0 , read message arbitrary user
+7|9|6|0|10 , information disclosure
+10 , escalation privilege
+7|9|6|0|10 , obtain sensitive information
+7|6|0 , spoof ssl server
+7|9|6|0|10 , insecure permission issue guest user access private information code information
+7|6|9|0 , bypass intend restriction javascript api execution
+7|6|0 , log
+7|9|6|0|10 , remote disclosure information
+7|6|0 , spoof address bar
+3|7|6|9|1|0 , commit failure condition error message commit fail activate partial configuration
+7|6|0 , run arbitrary code start database server escalate root privilege
+7|6|4|0 , unauthorized access application encrypt file
+7|6|0 , crash device freeze device
+7|9|6|0|10 , obtain sensitive configuration information
+7|6|0 , prevent user execute bubblewrap execute code
+7|6|9|0 , bypass intend item selection restriction
+7|6|0 , export broadcast receiver initiate taking screenshot result screenshot write external storage screen animation wake device expand status bar screenshot user notification text message dos reboot device
+7|6|9|0 , remote code execution
+3|7|6|9|1|0 , bypass authentication
+3|1 , scripting interaction backend server
+7|9|6|0|10 , remote unauthenticated disclosure information
+7|9|6|0|10 ,
+7|9|6|0|10 , information disclosure
+7|9|6|0|10 , access sensitive information confidentiality
+3|7|6|4|0 , brute force account credential
+5 , elevation privilege
+3|7|6|9|1|0 , remote code execution remote code execution
+7|6|0 , read arbitrary file
+7|6|0 , crash system escalate privilege
+7|9|6|0|10 , information disclosure information disclosure
+7|6|0 , factory reset remove user datum app loss datum factory reset
+10 , create fork relation restrict public project
+3|7|6|9|1|0 , root privilege
+7|9|6|0|10 , obtain sensitive information
+7|6|9|0 , execute arbitrary code
+7|9|6|0|10 , bypass aslr protection mechanism
+7|9|6|0|10 , database download
+3|7|6|9|1|0 , retain access unspecified vector
+3|7|6|4|0 , user enumeration improper restriction excessive authentication attempt enumerate user administrator group brute force attack password
+7|6|0 , code execution process create executable memory mapping execute shellcode
+7|6|0 , launch deployment denial service deployment interruption
+3|7|6|9|1|0 , access sensitive information access sensitive device information
+7|6|0 , infinite loop
+7|6|0 , bypass security constraint
+7|6|0 , memory allocation denial service invalid pointer access unspecified impact
+7|6|0 , denial service segmentation fault process crash
+7|9|6|0|10 , denial service access external resource
+7|6|0 , gain privilege
+7|9|6|0|10 , obtain sensitive information
+7|9|6|0|10 , gain privilege
+7|9|6|0|10 , obtain sensitive information kernel stack memory
+3|7|6|9|1|0 , authentication bypass upload malicious datum
+7|6|0 , execute arbitrary code system execute arbitrary code
+7|9|6|0|10 , obtain sensitive information
+7|9|6|0|10 , discover password reset token
+7|9|6|0|10 , obtain sensitive request information
+3|7|6|9|1|0 , view information modify setting execute code remotely
+7|6|0 , denial service
+7|6|0 , perform arbitrary file upload execute arbitrary code
+7|6|0 , handle block child denial service application crash unknown impact
+7|6|0 , denial service dos camera application unusable
+7|9|6|0|10 , information disclosure retrieve sensitive information
+7|6|0 , clickjacking attack
+7|9|6|0|10 , read internal information
+7|6|0 , untrusted search path gain privilege
+7|6|9|0 , bypass intend access restriction read task detail edit property
+3|10 , read sensitive information server template injection
+5 , denial service memory leak
+7|6|9|0 , denial service system hang denial service
+7|6|0 , untrusted search path gain privilege
+7|6|0 , bounds write execute code context current process
+7|6|0 , read additional data evaluate tls context response injection
+7|6|0 , escalation privilege local escalation privilege
+7|6|0 , execute arbitrary code
+7|6|0 , external control file change download package overwrite arbitrary file
+5 , attempt excessive memory allocation denial of- memory
+7|9|6|0|10 , read private file
+7|9|6|0|10 , access datum outside permission level general bypass exploit mitigation technology
+7|9|6|0|10 , obtain sensitive information
+5 , denial service memory consumption
+3|7|6|9|1|0 , force hostapd process terminate denial service
+7|6|0 , write arbitrary file symlink attack
+5 , leak memory denial service
+7|6|0 , inject bytecode app local escalation privilege
+7|6|0 , execute arbitrary code windows pdf remote code execution
+7|6|0 , execute arbitrary code
+7|6|0 , attack
+7|9|6|0|10 , information disclosure disclosure document root path
+7|6|0 , remote code execution
+7|6|0 , denial service system crash
+7|9|6|0|10 , administration console traffic obtain sensitive information
+7|6|0 , denial service memory corruption
+7|9|6|0|10 , obtain sensitive information early network communication
+7|9|6|0|10 , obtain sensitive information
+7|9|6|0|10 , view private ip address sensitive information
+7|6|0 , denial service assertion failure
+7|6|0 , dos attack
+7|6|0 , overwrite arbitrary file arbitrary folder execute arbitrary code
+7|9|6|0|10 , obtain sensitive cleartext web service information
+7|6|0 , traffic management microkernel tmm restart result denial service dos
+3|9|1|0 , signature bypass
+5 ,
+7|9|6|0|10 , information disclosure
+7|6|9|0 , bypass intend restriction method
+7|6|0 , gain privilege
+7|6|0 , leak referrer information
+7|9|6|0|10 , obtain sensitive information
+7|6|0 , untrusted search path gain privilege
+7|6|4|0 , file transfer
+7|6|0 , input validation issue execute arbitrary code
+7|6|0 , denial service unspecified impact
+7|6|0 , crash
+7|6|0 , denial service application crash unspecified impact
+7|9|6|0|10 , bypass aslr execute code
+7|6|0 , execute arbitrary javascript
+7|6|4|0 , validate cookie signature bypass intend protection mechanism php object injection attack execute arbitrary php code
+7|6|0 , accept arbitrary file send server overwrite unrelated file
+7|9|6|0|10 , discover password arbitrary user
+7|9|6|0|10 , information disclosure
+7|9|6|0|10 , path disclosure leakage sensitive datum
+3|7|9|6|4|0 , discover credential
+7|6|0 , execute arbitrary code
+7|9|6|0|10 , read content information disclosure vulnerability
+3|7|6|9|1|0 , injection cascading style sheet css token sequence
+3|7|6|9|1|0 , authentication bypass access account
+3|7|6|9|1|0 , authentication bypass insert arbitrary javascript html code update insert code
+5 , memory buffer error memory leakage dos attack
+7|6|0 , proxy command injection execute arbitrary code vulnerable installation
+7|9|6|0|10 , local malicious application access datum outside permission level
+7|6|9|0 , graphic driver denial service system crash gain privilege interface access control
+7|6|0 , command injection
+7|6|0 , remote code execution remote code execution
+7|9|6|0|10 , article bcc field
+7|9|6|0|10 , discover potentially sensitive url creation img element information disclosure
+7|6|0 , modify arbitrary file
+7|9|6|0|10 , retrieve memory connect server
+7|6|0 ,
+3|7|9|6|4|0 , strong password
+7|6|0 , inject malicious code change wireless setting
+7|9|6|0|10 , incorrect access control connect authentication subsequently record audio device microphone
+7|9|6|0|10 , mitigation bypass bypass aslr use cache thread stack
+5 , memory leak
+7|6|0 , execute arbitrary code
+7|6|4|0 , hidden administrative account flash new interface tag modbus coil map hmi login abb hmi read write hmi configuration file reset device
+9|0 , session hijacking privilege escalation
+7|9|6|0|10 , attack system
+7|9|6|0|10 , obtain party integration parameter information disclosure
+7|9|6|0|10 , read arbitrary file
+7|9|6|0|10 , obtain sensitive information entry password history
+7|6|0 , escape bubblewrap sandbox escape sandbox
+7|6|0 , spoof web site
+7|6|0 , execute arbitrary command
+7|9|6|0|10 , obtain cleartext datum birthday attack sweet32
+7|6|0 , clickjacking attack
+7|9|6|0|10 , data loss prevention obtain sensitive information
+7|6|0 , heap base buffer overflow
+7|6|0 , install arbitrary apk
+7|9|6|0|10 , chmod chown entire server client interface
+7|6|0 , submit malicious igs request network internal memory corruption crash rendering view modify
+7|6|0 , execute arbitrary code
+7|6|0 , bypass security restriction access sensitive information
+7|6|0 , local privilege escalation read root file file system
+7|6|0 , denial service stack consumption segmentation fault unspecified impact
+7|9|6|0|10 , obtain kernel information information disclosure
+7|6|4|0 ,
+7|9|6|0|10 , incorrect permission assignment modify
+7|6|0 , search path gain privilege
+7|9|6|0|10 , obtain sensitive information
+3 , use way hash decrypt password
+7|9|6|0|10 , obtain sensitive information
+7|6|0 , assertion failure denial service
+7|6|0 , arbitrary address change
+7|6|0 , impersonate arbitrary user
+3|7|9|6|4|0 , obtain database credential
+7|6|0 , uncontrolled search path element dll hijacking attacker access system
+9|0 , spoof content omnibox
+3|7|6|9|1|0 , bypass authentication execute arbitrary code
+2 , exchange message app send auth token vibease server obtain user credential message
+7|6|0 , enable escalation privilege physical access
+7|9|6|0|10 , enumerate bridge
+7|6|0 , unspecified impact man the- middle mitm attack
+7|6|0 , denial service denial service
+10 , incorrect default permission cwe-276 unauthorized access somachine basic resource file
+7|6|0 , open redirect vulnerability redirect user arbitrary web site phishing attack
+7|6|0 , overwrite arbitrary file
+3|7|9|6|4|0 , bypass intend access control
+7|9|6|0|10 , gain remote access administrator privilege
+7|6|0 , execute arbitrary command
+7|9|6|0|10 , information disclosure
+7|9|6|0|10 , obtain sensitive information
+7|6|0 , untrusted search path gain privilege
+7|9|6|0|10 , obtain sensitive information
+7|6|0 , execute code root privilege access software execute command
+7|6|0 , execute arbitrary script
+3|7|9|6|4|0 , prompt password template trigger expose
+7|6|9|0 , obtain credential
+7|6|0 , oam denial service dos condition affect device crash restart reload result dos condition
+7|9|6|0|10 , process project file force application read value outside array
+7|9|6|0|10 , obtain sensitive information
+7|9|6|0|10 , obtain sensitive information
+5 , denial service memory leak
+3|7|9|6|4|0 , password disclosure
+7|6|0 , denial service buffer read crash
+7|9|6|0|10 , execute management function access member information modify delete course system fail access learning content
+7|9|6|0|10 , obtain sensitive store information
+3|7|6|9|1|0 , remotely unlock safe obtain authorization bluetooth low energy ble enable notification
+7|6|9|0 , spoof ip address write security audit log
+7|9|6|0|10 , obtain potentially sensitive information kernel memory
+7|6|0 , insert run arbitrary code
+7|6|4|0 , attacker log
+2 , wrap sub encrypted part(s modified multipart email leak plaintext encrypt message part(s
+3|7|6|9|1|0 , root terminal serial interface execute arbitrary command root privilege
+3|7|9|6|4|0 , credential disclosure
+7|9|6|0|10 , information disclosure
+7|9|6|0|10 , obtain information compromise user system scripting engine information
+7|9|6|0|10 , expose wan replication credential
+7|6|9|0 , communicate use modify and/or intercept datum change pump setting control insulin delivery
+7|9|6|0|10 , information disclosure information disclosure
+5 , resource starvation denial service
+7|9|6|0|10 , obtain sensitive information process memory
+7|6|0 , download unintended cisco program client machine execute program
+7|6|0 , denial service memory corruption service crash execute arbitrary code
+7|6|0 , hash value trigger hash collision denial service cpu consumption
+7|6|0 , denial service daemon crash
+7|6|0 , denial service outage cpu consumption
+7|6|9|0 , elevation privilege execute arbitrary code compromise privileged process
+7|6|0 , denial service bsod unspecified impact
+3|9|6|1|4|0 , sniff authorization header reissue openstack token
+7|6|0 , denial service segmentation fault daemon crash
+7|9|6|0|10 , read configuration file discover credential
+7|6|0 , denial service
+7|6|0 , execute arbitrary code
+3|7|6|9|1|0 , view video stream
+7|9|6|0|10 , execute command expose sensitive information
+7|6|0 , audit log injection forge audit log line interpretation audit log file hinder misdirect interpretation audit log file hinder misdirect
+2 , cleartext transmission sensitive information view unencrypted password mcafee insights server
+7|6|0 , execute arbitrary code
+7|6|0 , execute arbitrary code denial service application crash user mode write av
+3|7|6|9|1|0 , execute arbitrary lua code execute arbitrary lua code
+7|6|0 , input validation path disclosure
+5 , memory leak consume memory denial service
+7|9|6|0|10 , read hide file
+7|6|0 , execute arbitrary code execute arbitrary code
+7|9|6|0|10 , grant user credential
+7|9|6|0|10 , obtain sensitive information
+7|9|6|0|10 , obtain sensitive information kernel stack memory
+7|9|6|0|10 , file send wrong buffer user private datum heap inadvertently display continue display datum
+3|7|6|9|1|0 , access application
+3|7|6|9|1|0 , access network resource
+3|7|6|9|1|0 , bypass intend authentication requirement
+7|6|0 , dll hijacking
+7|9|6|0|10 , bypass intend access restriction read arbitrary profile brute force attack
+7|9|6|0|10 , determine ip
+5 , setting flood denial service ping consume excess cpu memory
+7|9|6|0|10 , view kubernetes cluster token
+3|7|6|9|1|0 , authentication bypass cwe-287 view alter configuration information alter state running
+7|6|9|0 , removal bot remove user channel
+7|6|0 , disclose arbitrary memory information
+5 , memory leak dos
+3|7|9|6|4|0 , compromise user account
+7|9|6|0|10 , web page contain external link obtain sensitive information cross domain referer leakage
+7|6|0 , set arbitrary http header xss attack
+7|6|0 , denial service menu unavailability
+7|6|0 , compute icmp checksum read bound denial of-
+7|9|6|0|10 , gain privilege
+5 ,
+7|6|9|0 , use after- free vulnerability execute arbitrary code
+7|6|0 , denial service ntpd crash
+7|6|0 , denial service device reload tower processing
+7|6|0 , denial service unhandled exception process crash
+7|6|9|0 , vaconfig/ execute arbitrary command
+7|6|0 , hijack dll executable file execute arbitrary code
+7|9|6|0|10 , obtain sensitive information
+2 , compromise mysql server unauthorized access critical datum complete access man the- hijack authentication user
+7|6|0 , live photo audio video datum
+7|6|0 , denial service dos web base management interface affected system web base management interface unreachable dos condition
+7|9|6|0|10 , generate self sign certificate discover private key
+10 , browse url read password gain administrative privilege
+7|6|0 , denial service denial service
+3|7|6|9|1|0 , bypass authentication
+7|6|0 , patch request register user account modify file resource
+3|7|6|9|1|0 , authentication bypass
+3|7|6|9|1|0 , bypass intend access restriction
+7|6|0 , argument injection attack
+7|6|0 , denial of-
+7|6|0 , execute arbitrary code
+7|9|6|0|10 , compromise oracle flexcube universal banking unauthorized read access
+10 , privilege escalation gluster cli add self trusted storage pool privileged gluster operation add machine trusted storage pool start stop delete volume
+7|9|6|0|10 , information disclosure
+10 , local privilege escalation write log entry file point log file privileged location adopt file permission replace rename
+3|7|6|9|1|0 , request validation create read update delete entry subscriber database
+7|6|0 , authentication bypass access remote management login page manipulate post request access administrator page
+7|6|0 , query obtain sensitive information
+7|9|6|0|10 , obtain database password
+7|9|6|0|10 , use connection leak information
+7|6|0 , mishandles tainting execute arbitrary code denial service application crash
+7|6|0 , improper input validation cause
+7|9|6|0|10 , bypass security perform action
+7|6|0 , search path gain privilege
+3|9|1|0 , fake email address
+7|6|9|0 , bypass intend auth.conf access
+7|6|0 ,
+7|9|6|0|10 , obtain sensitive process memory information bounds read
+7|6|9|0 , send command
+3|7|6|9|1|0 , revert device factory default configuration
+7|9|6|0|10 , authentication bypass information disclosure
+7|6|0 , denial service application crash
+7|6|0 , display spoof location bar
+7|6|0 , control app access load malicious website create code webpage load run
+7|9|6|0|10 , bypass intend access restriction discover share secret standard filesystem operation
+7|6|0 , header extension length field overflow increment current data pointer infinite loop denial of-
+7|6|0 , denial service application crash
+7|9|6|0|10 , modify user disrupt kubectl invocation
+7|9|6|0|10 , read available sudo rule read sudo rule
+7|6|0 , update underlying openvpn configuration argument pass openvpn binary
+7|6|0 , dn over- denial service device reload
+7|9|6|0|10 , obtain organizational information statistic
+7|6|0 , execute arbitrary code open file execute arbitrary code
+7|6|0 , denial service system crash
+3|7|9|6|4|0 , discover wi fi credential
+7|6|0 , upload arbitrary html document
+7|9|6|0|10 , arbitrary file system
+7|6|4|0 , log database admin privilege complete compromise confidentiality integrity store datum high availability impact execute arbitrary command
+3|7|6|9|1|0 , impersonation attack
+7|6|0 , command injection attack execute arbitrary command root
+5 , memory leak denial service memory consumption
+7|6|10|0 , remote attack head unit reboot
+7|6|0 , redirect request arbitrary domain dns hijack attack
+7|9|6|0|10 , compromise confidentiality integrity service
+7|6|0 , denial service system hang
+7|9|6|0|10 , read system property bypass securitymanager read system property
+7|6|0 , execute program affected end user system execute program execute arbitrary code
+7|6|0 , phreake attack command function record frequency service activation request forgery activation request
+7|6|0 , change permission arbitrary file
+3|7|2|6|9|4|0 ,
+7|6|9|0 , bypass intend access restriction execute arbitrary iapi idql command
+7|6|0 , denial service daemon exit
+7|6|0 , execute arbitrary code block
+7|9|6|0|10 , read send e mail message
+7|6|0 , administration server denial service
+3|7|9|6|4|0 , local file inclusion read arbitrary file operating system read content searchblox configuration file
+9|0 , session fixation attack
+7|9|6|0|10 , internal hidden field
+7|6|0 , crlf inject arbitrary http header http response splitting
+7|6|0 , buffer overflow dos
+7|6|0 , kernel command injection local elevation privilege
+5 , submit large number email address identify valid enumerate large number valid user email address
+7|6|0 , uncontrolled search path arbitrary code execution
+7|9|6|0|10 , api
+7|6|0 , denial service denial service
+7|9|6|0|10 , exposure sensitive information view jenkins administrator web browser output control browser retrieve configure client secret
+7|9|6|0|10 , read arbitrary file
+3|7|6|9|1|0 , accept use minion config file subvert proper behaviour minion software
+7|9|6|0|10 , information disclosure
+7|6|9|0 , acl bypass ipc communication daemon
+3|10 , retrieve easily exfiltrate instal intellectual property datum
+7|9|6|0|10 , export import project tape archive file retrieve content file
+7|6|9|0 , bypass authentication execute arbitrary code
+7|6|9|0 , bypass cross origin restriction
+7|6|0 , input validation issue read restricted memory
+7|9|6|0|10 , bypass intend access restriction obtain sensitive pdf certificate information
+5 , high cpu load prevent update slave zone
+7|6|0 , execute arbitrary code denial service craft sdp communication send raw l2cap frame
+7|6|4|0 ,
+5 , memory leak denial service
+7|9|6|0|10 , read local file
+7|9|6|0|10 , obtain sensitive memory layout information
+7|6|0 , denial service program check system crash
+7|6|0 , arbitrary file overwrite overwrite system file content
+7|9|6|0|10 , plain text password storage gain access privilege
+5 , run perpetually monitor activity user
+7|6|0 , execution wiki page widget

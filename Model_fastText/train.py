@@ -11,14 +11,14 @@ import torch
 
 if __name__=='__main__':
     config = Config()
-    train_file = '../data/ag_news.train'
+    train_file = 'data/ag_news.train'
     if len(sys.argv) > 2:
         train_file = sys.argv[1]
-    test_file = '../data/ag_news.test'
+    test_file = 'data/ag_news.test'
     if len(sys.argv) > 3:
         test_file = sys.argv[2]
     
-    w2v_file = '../data/glove.840B.300d.txt'
+    w2v_file = 'data/glove.840B.300d.txt'
     
     dataset = Dataset(config)
     dataset.load_data(w2v_file, train_file, test_file)

@@ -5,6 +5,8 @@ from torch import nn
 from torch.autograd import Variable
 import copy
 import math
+import warnings
+warnings.filterwarnings("ignore")
 
 def clones(module, N):
     "Produce N identical layers."
@@ -16,7 +18,7 @@ class Embeddings(nn.Module):
     '''
     def __init__(self, d_model, vocab):
         super(Embeddings, self).__init__()
-        self.lut = nn.Embedding(vocab, d_model)
+        self.lut = nn.Embedding(vocab, d_model, padding_idx=1)
         self.d_model = d_model
 
     def forward(self, x):

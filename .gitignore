@@ -3,6 +3,7 @@
 
 # Data
 ckpts
+data/glove.840B.300d.txt
 
 # Byte-compiled / optimized / DLL files
 **/__pycache__/
@@ -49,7 +50,6 @@ coverage.xml
 .ropeproject
 
 # Django stuff:
-*.log
 *.pot
 
 # Sphinx documentation

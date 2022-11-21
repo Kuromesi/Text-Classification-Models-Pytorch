@@ -1,0 +1,227 @@
+*******************************************
+class Config(object):
+    N = 1 #6 in Transformer Paper
+    d_model = 256 #512 in Transformer Paper
+    d_ff = 512 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.5
+    output_size = 11
+    lr = 0.001
+    max_epochs = 1000
+    batch_size = 256
+    max_sen_len = 60
+Final Training Accuracy: 0.7768
+Final Validation Accuracy: 0.6601
+Final Test Accuracy: 0.6674
+*******************************************
+
+*******************************************
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.5
+    output_size = 11
+    lr = 0.001
+    max_epochs = 100
+    batch_size = 256
+    max_sen_len = 60
+Final Training Accuracy: 0.6560
+Final Validation Accuracy: 0.6135
+Final Test Accuracy: 0.6560
+*******************************************
+
+*******************************************
+Dimidiate
+*********
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.1
+    output_size = 11
+    lr = 0.0005
+    max_epochs = 100
+    batch_size = 256
+    max_sen_len = 60
+Final Training Accuracy: 0.9291
+Final Validation Accuracy: 0.6700
+Final Test Accuracy: 0.6743
+*******************************************
+
+*******************************************
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.3
+    output_size = 11
+    lr = 0.0005
+    max_epochs = 100
+    batch_size = 256
+    max_sen_len = 60
+Final Training Accuracy: 0.8339
+Final Validation Accuracy: 0.6391
+Final Test Accuracy: 0.6307
+*******************************************
+
+*******************************************
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.5
+    output_size = 11
+    lr = 0.0005
+    max_epochs = 200
+    batch_size = 256
+    max_sen_len = 60
+Final Training Accuracy: 0.8198
+Final Validation Accuracy: 0.6430
+Final Test Accuracy: 0.6743
+*******************************************
+
+*******************************************
+Exponential
+***********
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.1
+    output_size = 11
+    lr = 0.0003
+    max_epochs = 200
+    batch_size = 256
+    max_sen_len = 60
+    gamma = 0.98
+Final Training Accuracy: 0.8720
+Final Validation Accuracy: 0.6679
+Final Test Accuracy: 0.6328
+*******************************************
+
+*******************************************
+Exponential
+***********
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.1
+    output_size = 11
+    lr = 0.0005
+    max_epochs = 100
+    batch_size = 256
+    max_sen_len = 60
+    gamma = 0.99
+Final Training Accuracy: 0.8781
+Final Validation Accuracy: 0.6494
+Final Test Accuracy: 0.6411
+*******************************************
+
+*******************************************
+Exponential
+***********
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.1
+    output_size = 11
+    lr = 0.00075
+    max_epochs = 100
+    batch_size = 256
+    max_sen_len = 60
+    gamma = 0.98
+Final Training Accuracy: 0.8718
+Final Validation Accuracy: 0.6095
+Final Test Accuracy: 0.6535
+*******************************************
+
+*******************************************
+Exponential
+***********
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.1
+    output_size = 11
+    lr = 0.0005
+    max_epochs = 100
+    batch_size = 256
+    max_sen_len = 60
+    gamma = 0.98
+Final Training Accuracy: 0.8765
+Final Validation Accuracy: 0.6327
+Final Test Accuracy: 0.6515
+*******************************************
+
+*******************************************
+Exponential
+***********
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.1
+    output_size = 11
+    lr = 0.0005
+    max_epochs = 100
+    batch_size = 256
+    max_sen_len = 60
+    gamma = 0.98
+Final Training Accuracy: 0.8835
+Final Validation Accuracy: 0.6704
+Final Test Accuracy: 0.6831
+*******************************************
+
+*******************************************
+Step
+****
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 512 #512 in Transformer Paper
+    d_ff = 2048 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.1
+    output_size = 11
+    lr = 0.0005
+    max_epochs = 100
+    batch_size = 256
+    max_sen_len = 60
+    gamma = 0.5
+Final Training Accuracy: 0.8768
+Final Validation Accuracy: 0.6753
+Final Test Accuracy: 0.6660
+*******************************************
+
+*******************************************
+Step(NO NLP)
+************
+class Config(object):
+    N = 6 #6 in Transformer Paper
+    d_model = 256 #512 in Transformer Paper
+    d_ff = 512 #2048 in Transformer Paper
+    h = 8
+    dropout = 0.1
+    output_size = 11
+    lr = 0.0005
+    max_epochs = 30
+    batch_size = 16
+    max_sen_len = 60
+    gamma = 0.5
+Final Training Accuracy: 0.9394
+Final Validation Accuracy: 0.7302
+Final Test Accuracy: 0.7225
+*******************************************
+

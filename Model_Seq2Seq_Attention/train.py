@@ -7,20 +7,22 @@ import sys
 import torch.optim as optim
 from torch import nn
 import torch
+import warnings
+warnings.filterwarnings("ignore")
 
 if __name__=='__main__':
     config = Config()
-    train_file = '../data/ag_news.train'
+    train_file = 'data/train.txt'
     if len(sys.argv) > 2:
         train_file = sys.argv[1]
-    test_file = '../data/ag_news.test'
+    test_file = 'data/test.txt'
     if len(sys.argv) > 3:
         test_file = sys.argv[2]
     
-    w2v_file = '../data/glove.840B.300d.txt'
+    w2v_file = 'data/glove.840B.300d.txt'
     
     dataset = Dataset(config)
-    dataset.load_data(w2v_file, train_file, test_file)
+    dataset.load_data(train_file, test_file)
     
     # Create Model with specified optimizer and loss function
     ##############################################################
@@ -29,7 +31,7 @@ if __name__=='__main__':
         model.cuda()
     model.train()
     optimizer = optim.SGD(model.parameters(), lr=config.lr)
-    NLLLoss = nn.NLLLoss()
+    NLLLoss = nn.BCELoss()
     model.add_optimizer(optimizer)
     model.add_loss_op(NLLLoss)
     ##############################################################
@@ -40,12 +42,14 @@ if __name__=='__main__':
     for i in range(config.max_epochs):
         print ("Epoch: {}".format(i))
         train_loss,val_accuracy = model.run_epoch(dataset.train_iterator, dataset.val_iterator, i)
+        print("\t Learning Rate: {:.5f}".format(model.optimizer.state_dict()['param_groups'][0]['lr']))
         train_losses.append(train_loss)
         val_accuracies.append(val_accuracy)
 
     train_acc = evaluate_model(model, dataset.train_iterator)
     val_acc = evaluate_model(model, dataset.val_iterator)
     test_acc = evaluate_model(model, dataset.test_iterator)
+    save_model(model, 'ckpts/seq2seq.pkl')
 
     print ('Final Training Accuracy: {:.4f}'.format(train_acc))
     print ('Final Validation Accuracy: {:.4f}'.format(val_acc))

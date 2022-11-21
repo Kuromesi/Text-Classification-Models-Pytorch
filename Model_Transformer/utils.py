@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader, Dataset
 from torch.utils.data.dataset import random_split
 from torch.utils.data.dataloader import _SingleProcessDataLoaderIter, _MultiProcessingDataLoaderIter
 from itertools import chain
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, f1_score
 import random
 import spacy
 import torch
@@ -79,7 +79,11 @@ class Dataset():
         Returns:
             label (int) : integer value corresponding to label string
         '''
-        return int(label.strip()[-1])
+        label = label.split('|')
+        idx = [0.] * 11
+        for la in label:
+            idx[int(la)] = 1.0
+        return idx
 
     def yield_tokens(self, data_iter, tokenizer):
         for _, text in data_iter:
@@ -92,21 +96,22 @@ class Dataset():
             processed_text = torch.tensor(self.text_pipeline(_text), dtype=torch.int64)
             text_list.append(processed_text.tolist())
             offsets.append(processed_text.size(0))
-        label_list = torch.tensor(label_list, dtype=torch.int64)
+        label_list = torch.tensor(label_list, dtype=torch.float32)
         offsets = torch.tensor(offsets[:-1]).cumsum(dim=0)
-        return label_list, to_tensor(text_list, padding_value=1).t(), offsets
+        text_list = to_tensor(text_list, padding_value=1.0).t()
+        return label_list, text_list, offsets
 
     def load_data(self, train_file, test_file=None, val_file=None):
         NLP = spacy.load('en_core_web_trf')
         # tokenizer = lambda sent: [x.lemma_.lower() for x in NLP(sent) if x.lemma_.lower() != " "]
         tokenizer = get_tokenizer('basic_english')
         with open(train_file, 'r') as datafile:     
-                    data = [line.strip().split(',', maxsplit=1) for line in datafile]
-                    data_text = list(map(lambda x: x[1], data))
+                    data = [line.strip().split(',', maxsplit=1) for line in datafile if len(line.strip().split(',', maxsplit=1)) > 1]
+                    data_text = list(map(lambda x: "<cls>" + x[1], data))
                     data_label = list(map(lambda x: self.parse_label(x[0]), data))
         train = list(zip(data_label, data_text))
         train_iter = to_map_style_dataset(iter(train))
-        self.vocab = build_vocab_from_iterator(self.yield_tokens(train_iter, tokenizer), specials=["<unk>"])
+        self.vocab = build_vocab_from_iterator(self.yield_tokens(train_iter, tokenizer), specials=["<unk>", "<pad>", "<cls>"])
         self.vocab.set_default_index(self.vocab["<unk>"])
         self.text_pipeline = lambda x: self.vocab(tokenizer(x))
         self.label_pipeline = lambda x: int(x) - 1
@@ -144,13 +149,21 @@ def evaluate_model(model, iterator):
         else:
             x = batch[1]
         y_pred = model(x)
-        predicted = torch.max(y_pred.cpu().data, 1)[1] + 1
+        # predicted = torch.max(y_pred.cpu().data, 1)[1] + 1
+        y_pred = y_pred.cpu().data
+        predicted = torch.where(y_pred >= 0.3, 1, y_pred)
+        predicted = torch.where(predicted < 0.3, 0, predicted)
         all_preds.extend(predicted.numpy())
         all_y.extend(batch[0].numpy())
-    score = accuracy_score(all_y, np.array(all_preds).flatten())
+    preds = np.array(all_preds)
+    score = accuracy_score(all_y, preds, normalize=True, sample_weight=None)
     return score
 
 def save_model(model, file_name):
     """用于保存模型"""
     with open(file_name, "wb") as f:
         pickle.dump(model, f)
+
+def load_model(filename):
+    with open(filename, 'rb') as f:
+        return pickle.load(filename)
