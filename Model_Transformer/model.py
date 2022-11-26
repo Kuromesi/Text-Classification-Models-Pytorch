@@ -26,18 +26,34 @@ class Transformer(nn.Module):
         self.encoder = Encoder(EncoderLayer(config.d_model, deepcopy(attn), deepcopy(ff), dropout), N)
         self.src_embed = nn.Sequential(Embeddings(config.d_model, src_vocab), deepcopy(position)) #Embeddings followed by PE
 
+        # Convolution Layer
+        self.conv1 = nn.Sequential(
+            nn.Conv1d(in_channels=d_model, out_channels=config.num_channels, kernel_size=config.kernel_size[0]),
+            nn.ReLU(),
+            nn.MaxPool1d(config.max_sen_len - config.kernel_size[0]+1)
+        )
+        self.conv2 = nn.Sequential(
+            nn.Conv1d(in_channels=d_model, out_channels=config.num_channels, kernel_size=config.kernel_size[1]),
+            nn.ReLU(),
+            nn.MaxPool1d(config.max_sen_len - config.kernel_size[1]+1)
+        )
+        self.conv3 = nn.Sequential(
+            nn.Conv1d(in_channels=d_model, out_channels=config.num_channels, kernel_size=config.kernel_size[2]),
+            nn.ReLU(),
+            nn.MaxPool1d(config.max_sen_len - config.kernel_size[2]+1)
+        )
+
         # Fully-Connected Layer
         self.fc = nn.Linear(
             self.config.num_channels*len(self.config.kernel_size),
             self.config.output_size
         )
         
-
         self.fc1 = nn.Linear(
             self.config.d_model,
             self.config.d_model
         )
-        self.fc = nn.Linear(
+        self.fc2 = nn.Linear(
             self.config.d_model,
             self.config.output_size
         )
@@ -47,16 +63,23 @@ class Transformer(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
-        embedded_sents = self.src_embed(x.permute(1,0)) # shape = (batch_size, sen_len, d_model)
+        embedded_sents = self.src_embed(x) # shape = (batch_size, sen_len, d_model)
         encoded_sents = self.encoder(embedded_sents)
         
         # Convert input to (batch_size, d_model) for linear layer
         final_feature_map = encoded_sents[:,0,:]
         a = x.size()
         b = embedded_sents.size()
+        
+        encoded_sents = encoded_sents.permute(0, 2, 1)
         c = encoded_sents.size()
-        final_out = self.fc1(final_feature_map)
-        final_out = self.fc(final_out)
+        conv_out1 = self.conv1(encoded_sents).squeeze(2)
+        conv_out2 = self.conv2(encoded_sents).squeeze(2)
+        conv_out3 = self.conv3(encoded_sents).squeeze(2)
+        all_out = torch.cat((conv_out1, conv_out2, conv_out3), 1)
+        final_out = self.fc(all_out)
+        # final_out = self.fc1(final_feature_map)
+        # final_out = self.fc(final_out)
         return self.sigmoid(final_out)
     
     def add_optimizer(self, optimizer):
@@ -79,10 +102,6 @@ class Transformer(nn.Module):
         train_losses = []
         val_accuracies = []
         losses = []
-        
-        # Reduce learning rate as number of epochs increase
-        # if (epoch == int(self.config.max_epochs/3)) or (epoch == int(2*self.config.max_epochs/3)):
-        #     self.reduce_lr()
             
         for i, batch in enumerate(train_iterator):
             self.optimizer.zero_grad()
@@ -99,7 +118,7 @@ class Transformer(nn.Module):
             loss.backward()
             losses.append(loss.data.cpu().numpy())
             self.optimizer.step()
-            if i % 200 == 0:
+            if i % 5 == 0:
                 print("Iter: {}".format(i+1))
                 avg_train_loss = np.mean(losses)
                 train_losses.append(avg_train_loss)

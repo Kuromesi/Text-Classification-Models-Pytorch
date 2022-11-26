@@ -10,10 +10,10 @@ import torch
 
 if __name__=='__main__':
     config = Config()
-    train_file = './data/v0/train.txt'
+    train_file = './data/capec/train.txt'
     if len(sys.argv) > 2:
         train_file = sys.argv[1]
-    test_file = './data/v0/test.txt'
+    test_file = './data/capec/test.txt'
     if len(sys.argv) > 3:
         test_file = sys.argv[2]
     
@@ -47,8 +47,8 @@ if __name__=='__main__':
     train_acc = evaluate_model(model, dataset.train_iterator)
     val_acc = evaluate_model(model, dataset.val_iterator)
     test_acc = evaluate_model(model, dataset.test_iterator)
-    save_model(model, 'ckpts/transformer.pkl')
-    save_model(dataset.vocab, 'ckpts/vocab.pkl')
+    save_model(model, 'ckpts/transformer-capec.pkl')
+    # save_model(dataset.vocab, 'ckpts/vocab.pkl')
     print ('Final Training Accuracy: {:.4f}'.format(train_acc))
     print ('Final Validation Accuracy: {:.4f}'.format(val_acc))
     print ('Final Test Accuracy: {:.4f}'.format(test_acc))

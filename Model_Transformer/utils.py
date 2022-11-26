@@ -10,10 +10,10 @@ from torch.utils.data.dataloader import _SingleProcessDataLoaderIter, _MultiProc
 from itertools import chain
 from sklearn.metrics import accuracy_score, f1_score
 import random
-import spacy
 import torch
 import numpy as np
 import pickle
+from transformers import AutoTokenizer
 
 class BlockShuffleDataLoader(DataLoader):
     def __init__(self, dataset: Dataset, sort_key, sort_bs_num=None, is_shuffle=True, **kwargs):
@@ -68,8 +68,11 @@ class Dataset():
         self.train_iterator = None
         self.test_iterator = None
         self.val_iterator = None
-        self.vocab = []
+        
         self.word_embeddings = {}
+
+        self.tokenizer = AutoTokenizer.from_pretrained(self.config.model_name)
+        self.vocab = self.tokenizer.vocab
 
     def parse_label(self, label):
         '''
@@ -80,7 +83,7 @@ class Dataset():
             label (int) : integer value corresponding to label string
         '''
         label = label.split('|')
-        idx = [0.] * 11
+        idx = [0.] * self.config.output_size
         for la in label:
             idx[int(la)] = 1.0
         return idx
@@ -93,27 +96,27 @@ class Dataset():
         label_list, text_list, offsets = [], [], [0]
         for (_label, _text) in batch:
             label_list.append(_label)
-            processed_text = torch.tensor(self.text_pipeline(_text), dtype=torch.int64)
-            text_list.append(processed_text.tolist())
-            offsets.append(processed_text.size(0))
+            text_list.append(_text)
+            # processed_text = torch.tensor(self.text_pipeline(_text), dtype=torch.int64)
+            # text_list.append(processed_text.tolist())
+            # offsets.append(processed_text.size(0))
+        text_list = self.tokenizer(text_list, padding=True, truncation=True, return_tensors="pt", max_length=self.config.max_sen_len)
+        text_vec = text_list['input_ids']
+        attention_mask = text_list['attention_mask']
         label_list = torch.tensor(label_list, dtype=torch.float32)
-        offsets = torch.tensor(offsets[:-1]).cumsum(dim=0)
-        text_list = to_tensor(text_list, padding_value=1.0).t()
-        return label_list, text_list, offsets
+        # offsets = torch.tensor(offsets[:-1]).cumsum(dim=0)
+        # text_list = to_tensor(text_list, padding_value=1.0).t()
+        return label_list, text_vec, attention_mask
 
     def load_data(self, train_file, test_file=None, val_file=None):
-        NLP = spacy.load('en_core_web_trf')
         # tokenizer = lambda sent: [x.lemma_.lower() for x in NLP(sent) if x.lemma_.lower() != " "]
-        tokenizer = get_tokenizer('basic_english')
+        # tokenizer = get_tokenizer('basic_english')
         with open(train_file, 'r') as datafile:     
                     data = [line.strip().split(',', maxsplit=1) for line in datafile if len(line.strip().split(',', maxsplit=1)) > 1]
-                    data_text = list(map(lambda x: "<cls>" + x[1], data))
+                    data_text = list(map(lambda x: x[1], data))
                     data_label = list(map(lambda x: self.parse_label(x[0]), data))
         train = list(zip(data_label, data_text))
         train_iter = to_map_style_dataset(iter(train))
-        self.vocab = build_vocab_from_iterator(self.yield_tokens(train_iter, tokenizer), specials=["<unk>", "<pad>", "<cls>"])
-        self.vocab.set_default_index(self.vocab["<unk>"])
-        self.text_pipeline = lambda x: self.vocab(tokenizer(x))
         self.label_pipeline = lambda x: int(x) - 1
 
         # Load test data
@@ -124,7 +127,7 @@ class Dataset():
         test = list(zip(data_label, data_text))
         test_dataset = to_map_style_dataset(iter(test))
 
-        num_train = int(len(train_iter) * 0.95)
+        num_train = int(len(train_iter) * 0.8)
         train_dataset, valid_dataset = random_split(train_iter, [num_train, len(train_iter) - num_train])
         train_dataset = to_map_style_dataset(train_dataset)
         valid_dataset = to_map_style_dataset(valid_dataset)
@@ -146,6 +149,8 @@ def evaluate_model(model, iterator):
     for idx,batch in enumerate(iterator):
         if torch.cuda.is_available():
             x = batch[1].cuda()
+            attention_mask = batch[2].cuda()
+            y = batch[0].cuda()
         else:
             x = batch[1]
         y_pred = model(x)
@@ -166,4 +171,4 @@ def save_model(model, file_name):
 
 def load_model(filename):
     with open(filename, 'rb') as f:
-        return pickle.load(filename)
+        return pickle.load(f)

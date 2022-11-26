@@ -6,6 +6,7 @@ from copy import deepcopy
 import numpy as np
 from utils import *
 from transformers import BertForSequenceClassification, BertConfig, BertModel, AutoModelForMaskedLM, BertPreTrainedModel
+from transformers import RobertaConfig, RobertaModel
 from encoder import EncoderLayer, Encoder
 from train_utils import Embeddings,PositionalEncoding
 from attention import MultiHeadedAttention
@@ -14,10 +15,10 @@ from feed_forward import PositionwiseFeedForward
 class Classifier(BertPreTrainedModel):
     def __init__(self, config):
         
-        bertConfig = BertConfig.from_pretrained(config.model_name, hidden_dropout_prob=config.dropout)
+        bertConfig = RobertaConfig.from_pretrained(config.model_name, hidden_dropout_prob=config.dropout)
         super(Classifier, self).__init__(bertConfig)
         # config = BertConfig.from_pretrained(config.model_name, hidden_dropout_prob=config.dropout)
-        self.src_embed = BertModel.from_pretrained(config.model_name, config=bertConfig)
+        self.src_embed = RobertaModel.from_pretrained(config.model_name, config=bertConfig)
         self.myconfig = config
         for param in self.src_embed.parameters():
             param.requires_grad = False
@@ -37,6 +38,12 @@ class Classifier(BertPreTrainedModel):
             nn.ReLU(),
             nn.MaxPool1d(config.max_sen_len - config.kernel_size[2]+1)
         )
+        
+        for conv in [self.conv1, self.conv2, self.conv3]:
+            for m in conv.modules():
+                if isinstance(m, nn.Conv1d):  
+                    torch.nn.init.xavier_uniform(m.weight)
+                    torch.nn.init.constant(m.bias, 0.1)
 
         self.fc1=torch.nn.Linear(bertConfig.hidden_size, bertConfig.hidden_size)
         self.fc2=torch.nn.Linear(bertConfig.hidden_size, bertConfig.hidden_size)
