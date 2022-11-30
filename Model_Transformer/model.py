@@ -9,13 +9,13 @@ from encoder import EncoderLayer, Encoder
 from feed_forward import PositionwiseFeedForward
 import numpy as np
 from utils import *
-
+from metric import Scorer
 class Transformer(nn.Module):
     def __init__(self, config, src_vocab):
         super(Transformer, self).__init__()
         self.config = config
         self.best = 0
-        
+        self.scorer = Scorer()
         h, N, dropout = self.config.h, self.config.N, self.config.dropout
         d_model, d_ff = self.config.d_model, self.config.d_ff
         
@@ -25,6 +25,10 @@ class Transformer(nn.Module):
         
         self.encoder = Encoder(EncoderLayer(config.d_model, deepcopy(attn), deepcopy(ff), dropout), N)
         self.src_embed = nn.Sequential(Embeddings(config.d_model, src_vocab), deepcopy(position)) #Embeddings followed by PE
+
+        # Bilstm layer
+        self.bilstm = nn.LSTM(input_size=d_model, hidden_size=config.lstm_hiddens, num_layers=config.lstm_layers,
+                        bidirectional=True, batch_first=True, bias=True)
 
         # Convolution Layer
         self.conv1 = nn.Sequential(
@@ -42,6 +46,9 @@ class Transformer(nn.Module):
             nn.ReLU(),
             nn.MaxPool1d(config.max_sen_len - config.kernel_size[2]+1)
         )
+
+        self.classifier = nn.Linear(config.lstm_hiddens * 2, config.output_size)
+
 
         # Fully-Connected Layer
         self.fc = nn.Linear(
@@ -71,13 +78,15 @@ class Transformer(nn.Module):
         a = x.size()
         b = embedded_sents.size()
         
-        encoded_sents = encoded_sents.permute(0, 2, 1)
+        # encoded_sents = encoded_sents.permute(0, 2, 1)
         c = encoded_sents.size()
-        conv_out1 = self.conv1(encoded_sents).squeeze(2)
-        conv_out2 = self.conv2(encoded_sents).squeeze(2)
-        conv_out3 = self.conv3(encoded_sents).squeeze(2)
-        all_out = torch.cat((conv_out1, conv_out2, conv_out3), 1)
-        final_out = self.fc(all_out)
+        all_out = self.bilstm(encoded_sents)[0][:, 0, :]
+        d = all_out.size()
+        # conv_out1 = self.conv1(encoded_sents).squeeze(2)
+        # conv_out2 = self.conv2(encoded_sents).squeeze(2)
+        # conv_out3 = self.conv3(encoded_sents).squeeze(2)
+        # all_out = torch.cat((conv_out1, conv_out2, conv_out3), 1)
+        final_out = self.classifier(all_out)
         # final_out = self.fc1(final_feature_map)
         # final_out = self.fc(final_out)
         return self.sigmoid(final_out)
@@ -118,7 +127,7 @@ class Transformer(nn.Module):
             loss.backward()
             losses.append(loss.data.cpu().numpy())
             self.optimizer.step()
-            if i % 5 == 0:
+            if i % 10 == 0:
                 print("Iter: {}".format(i+1))
                 avg_train_loss = np.mean(losses)
                 train_losses.append(avg_train_loss)
@@ -126,11 +135,10 @@ class Transformer(nn.Module):
                 losses = []
                 
                 # Evalute Accuracy on validation set
-                val_accuracy = evaluate_model(self, val_iterator)
-                if (i  > self.config.max_epochs / 3 and self.best < val_accuracy):
-                    save_model(self, 'ckpts/transformer.pkl')
-                    self.best = val_accuracy
-                print("\tVal Accuracy: {:.4f}".format(val_accuracy))
+                self.scorer.evaluate_model(self, val_iterator, "Validation")
+                # if (i  > self.config.max_epochs / 3 and self.best < val_accuracy):
+                #     save_model(self, 'ckpts/transformer.pkl')
+                #     self.best = val_accuracy
                 self.train()
 
                 

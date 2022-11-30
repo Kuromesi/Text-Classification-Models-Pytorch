@@ -127,7 +127,7 @@ class Dataset():
         test = list(zip(data_label, data_text))
         test_dataset = to_map_style_dataset(iter(test))
 
-        num_train = int(len(train_iter) * 0.8)
+        num_train = int(len(train_iter) * 0.9)
         train_dataset, valid_dataset = random_split(train_iter, [num_train, len(train_iter) - num_train])
         train_dataset = to_map_style_dataset(train_dataset)
         valid_dataset = to_map_style_dataset(valid_dataset)

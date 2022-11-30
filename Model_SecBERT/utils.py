@@ -68,10 +68,11 @@ class Dataset():
         self.train_iterator = None
         self.test_iterator = None
         self.val_iterator = None
-        self.vocab = []
+        
         self.word_embeddings = {}
 
         self.tokenizer = AutoTokenizer.from_pretrained(self.config.model_name)
+        self.vocab = self.tokenizer.vocab
 
     def parse_label(self, label):
         '''
@@ -82,7 +83,7 @@ class Dataset():
             label (int) : integer value corresponding to label string
         '''
         label = label.split('|')
-        idx = [0.] * 11
+        idx = [0.] * self.config.output_size
         for la in label:
             idx[int(la)] = 1.0
         return idx
@@ -126,7 +127,7 @@ class Dataset():
         test = list(zip(data_label, data_text))
         test_dataset = to_map_style_dataset(iter(test))
 
-        num_train = int(len(train_iter) * 0.95)
+        num_train = int(len(train_iter) * 0.8)
         train_dataset, valid_dataset = random_split(train_iter, [num_train, len(train_iter) - num_train])
         train_dataset = to_map_style_dataset(train_dataset)
         valid_dataset = to_map_style_dataset(valid_dataset)
@@ -152,7 +153,7 @@ def evaluate_model(model, iterator):
             y = batch[0].cuda()
         else:
             x = batch[1]
-        y_pred, loss = model(x, attention_mask, y)
+        y_pred, loss = model(x, attention_mask=attention_mask, label=y)
         # predicted = torch.max(y_pred.cpu().data, 1)[1] + 1
         y_pred = y_pred.cpu().data
         predicted = torch.where(y_pred >= 0.3, 1, y_pred)
@@ -170,4 +171,4 @@ def save_model(model, file_name):
 
 def load_model(filename):
     with open(filename, 'rb') as f:
-        return pickle.load(filename)
+        return pickle.load(f)

@@ -10,10 +10,10 @@ import torch
 
 if __name__=='__main__':
     config = Config()
-    train_file = './data/v0/train.txt'
+    train_file = './data/capec/train.txt'
     if len(sys.argv) > 2:
         train_file = sys.argv[1]
-    test_file = './data/v0/test.txt'
+    test_file = './data/capec/test.txt'
     if len(sys.argv) > 3:
         test_file = sys.argv[2]
     
