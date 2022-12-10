@@ -142,6 +142,10 @@ class Dataset():
         print ("Loaded {} training examples".format(len(train_dataset)))
         print ("Loaded {} test examples".format(len(test_dataset)))
         print ("Loaded {} validation examples".format(len(valid_dataset)))
+
+    def text2vec(self, text):
+        return self.tokenizer(text, padding=True, truncation=True, return_tensors="pt", max_length=self.config.max_sen_len)
+
         
 def evaluate_model(model, iterator):
     all_preds = []

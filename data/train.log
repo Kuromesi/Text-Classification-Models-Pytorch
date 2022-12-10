@@ -225,3 +225,72 @@ Final Validation Accuracy: 0.7302
 Final Test Accuracy: 0.7225
 *******************************************
 
+##########FINAL RESULTS##########
+        Train Accuracy: 0.8932
+        Train Precision: 0.9694
+        Train F1: 0.9748
+        Train Recall: 0.9878
+#################################
+        Validation Accuracy: 0.7155
+        Validation Precision: 0.8906
+        Validation F1: 0.8917
+        Validation Recall: 0.9188
+#################################
+        Test Accuracy: 0.7068
+        Test Precision: 0.8601
+        Test F1: 0.8575
+        Test Recall: 0.8798
+#################################
+
+##########FINAL RESULTS##########
+        Train Accuracy: 0.8004
+        Train Precision: 0.9357
+        Train F1: 0.9408
+        Train Recall: 0.9603
+#################################
+        Validation Accuracy: 0.6655
+        Validation Precision: 0.8838
+        Validation F1: 0.8805
+        Validation Recall: 0.9055
+#################################
+        Test Accuracy: 0.6912
+        Test Precision: 0.9020
+        Test F1: 0.8993
+        Test Recall: 0.9195
+#################################
+
+
+------comparative results------
+##########FINAL RESULTS##########
+        Train Accuracy: 0.5624
+        Train Precision: 0.7318
+        Train F1: 0.7365
+        Train Recall: 0.7917
+#################################
+        Validation Accuracy: 0.4818
+        Validation Precision: 0.6784
+        Validation F1: 0.6616
+        Validation Recall: 0.7228
+#################################
+        Test Accuracy: 0.5000
+        Test Precision: 0.6852
+        Test F1: 0.6705
+        Test Recall: 0.7325
+#################################
+
+##########FINAL RESULTS##########
+        Train Accuracy: 0.6867
+        Train Precision: 0.8246
+        Train F1: 0.8270
+        Train Recall: 0.8660
+#################################
+        Validation Accuracy: 0.5939
+        Validation Precision: 0.7519
+        Validation F1: 0.7388
+        Validation Recall: 0.7886
+#################################
+        Test Accuracy: 0.6043
+        Test Precision: 0.7579
+        Test F1: 0.7392
+        Test Recall: 0.7757
+#################################

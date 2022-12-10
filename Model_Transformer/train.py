@@ -10,10 +10,10 @@ import torch
 
 if __name__=='__main__':
     config = Config()
-    train_file = './data/capec/train.txt'
+    train_file = './data/CVE2CWE/cve.train'
     if len(sys.argv) > 2:
         train_file = sys.argv[1]
-    test_file = './data/capec/test.txt'
+    test_file = './data/CVE2CWE/cve.test'
     if len(sys.argv) > 3:
         test_file = sys.argv[2]
     
@@ -26,7 +26,7 @@ if __name__=='__main__':
     if torch.cuda.is_available():
         model.cuda()
     model.train()
-    optimizer = optim.Adam(model.parameters(), lr=config.lr)
+    optimizer = optim.Adam(model.parameters(), lr=config.lr, weight_decay=0.0002)
     loss_func = nn.BCELoss()
     model.add_optimizer(optimizer)
     model.add_loss_op(loss_func)
@@ -50,5 +50,5 @@ if __name__=='__main__':
     print("#################################")
     test_acc = model.scorer.evaluate_model(model, dataset.test_iterator, "Test")
     print("#################################")
-    # save_model(model, 'ckpts/transformer-capec.pkl')
+    save_model(model, 'ckpts/transformer-cve.pkl')
     # save_model(dataset.vocab, 'ckpts/vocab.pkl')

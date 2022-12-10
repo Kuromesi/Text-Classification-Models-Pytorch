@@ -47,7 +47,10 @@ class Transformer(nn.Module):
             nn.MaxPool1d(config.max_sen_len - config.kernel_size[2]+1)
         )
 
-        self.classifier = nn.Linear(config.lstm_hiddens * 2, config.output_size)
+        self.classifier = nn.Sequential(
+            nn.Linear(config.lstm_hiddens * 2, config.lstm_hiddens * 2),
+            nn.Linear(config.lstm_hiddens * 2, config.lstm_hiddens * 2),
+            nn.Linear(config.lstm_hiddens * 2, config.output_size))
 
 
         # Fully-Connected Layer
@@ -127,7 +130,7 @@ class Transformer(nn.Module):
             loss.backward()
             losses.append(loss.data.cpu().numpy())
             self.optimizer.step()
-            if i % 10 == 0:
+            if i % 50 == 0:
                 print("Iter: {}".format(i+1))
                 avg_train_loss = np.mean(losses)
                 train_losses.append(avg_train_loss)
@@ -135,11 +138,9 @@ class Transformer(nn.Module):
                 losses = []
                 
                 # Evalute Accuracy on validation set
-                self.scorer.evaluate_model(self, val_iterator, "Validation")
-                # if (i  > self.config.max_epochs / 3 and self.best < val_accuracy):
-                #     save_model(self, 'ckpts/transformer.pkl')
-                #     self.best = val_accuracy
-                self.train()
-
-                
+                accuracy, precision, f1, recall = self.scorer.evaluate_model(self, val_iterator, "Validation")
+                if (i  > 4 * self.config.max_epochs / 5 and self.best < precision):
+                    save_model(self, 'ckpts/transformer.pkl')
+                    self.best = precision
+                self.train()       
         return train_losses, val_accuracies
